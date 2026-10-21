@@ -1,0 +1,686 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Adopción de IA en Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: single-column stack of a sticky header, a KPI grid, and chart panels,
+     all on a warm-neutral plane; data colors = validated blue (primary) + orange (Colombia spotlight). */
+  :root {
+    color-scheme: light;
+    --plane:        #f4f3ef;
+    --surface:      #fcfcfb;
+    --surface-2:    #f9f9f7;
+    --ink:          #0b0b0b;
+    --ink-2:        #52514e;
+    --muted:        #898781;
+    --grid:         #e1e0d9;
+    --baseline:     #c3c2b7;
+    --border:       rgba(11,11,11,0.10);
+    --series-1:     #2a78d6; /* blue  */
+    --series-1-soft:#cde2fb;
+    --series-2:     #eb6834; /* orange — Colombia spotlight */
+    --series-2-soft:#fbd9c9;
+    --good:         #0ca30c;
+    --accent-head:  #184f95;
+    --shadow:       0 1px 2px rgba(11,11,11,.05), 0 8px 24px rgba(11,11,11,.06);
+    --font-display: "Archivo", "Segoe UI", system-ui, sans-serif;
+    --font-body:    "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --plane:        #0d0d0d;
+      --surface:      #1a1a19;
+      --surface-2:    #201f1d;
+      --ink:          #f0efec;
+      --ink-2:        #c3c2b7;
+      --muted:        #908e88;
+      --grid:         #2c2c2a;
+      --baseline:     #383835;
+      --border:       rgba(255,255,255,0.12);
+      --series-1:     #3987e5;
+      --series-1-soft:#1d3a5c;
+      --series-2:     #e07a44;
+      --series-2-soft:#4a2f1f;
+      --good:         #30b830;
+      --accent-head:  #7fb0e8;
+      --shadow:       0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --plane:        #0d0d0d;
+    --surface:      #1a1a19;
+    --surface-2:    #201f1d;
+    --ink:          #f0efec;
+    --ink-2:        #c3c2b7;
+    --muted:        #908e88;
+    --grid:         #2c2c2a;
+    --baseline:     #383835;
+    --border:       rgba(255,255,255,0.12);
+    --series-1:     #3987e5;
+    --series-1-soft:#1d3a5c;
+    --series-2:     #e07a44;
+    --series-2-soft:#4a2f1f;
+    --good:         #30b830;
+    --accent-head:  #7fb0e8;
+    --shadow:       0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--plane);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0 56px;
+  }
+
+  /* sticky header band */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: var(--surface);
+  }
+  header.top {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 15;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+  .top-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 18px 16px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.3rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+    text-wrap: balance;
+    max-width: 18ch;
+  }
+  .sub {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: .98rem;
+    max-width: 58ch;
+  }
+  .meta-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  .updated {
+    font-size: .78rem;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .updated b { color: var(--ink-2); font-weight: 600; }
+  .theme-btn {
+    font-family: var(--font-body);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--ink-2);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .theme-btn:hover { border-color: var(--baseline); }
+  .theme-btn:focus-visible { outline: 2px solid var(--series-1); outline-offset: 2px; }
+
+  section { margin-top: 34px; }
+  .sec-head { margin: 0 0 4px; }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.22rem;
+    letter-spacing: -0.01em;
+    margin: 0 0 4px;
+    text-wrap: balance;
+  }
+  .sec-note { margin: 0 0 16px; color: var(--ink-2); font-size: .9rem; max-width: 70ch; }
+
+  /* KPI grid */
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px 15px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .kpi .cap {
+    font-size: .74rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+  .kpi .val {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.9rem, 1.3rem + 2.2vw, 2.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi .val .unit { font-size: .55em; font-weight: 700; color: var(--ink-2); margin-left: 2px; }
+  .kpi .desc { margin: 10px 0 0; font-size: .86rem; color: var(--ink-2); }
+  .kpi .src { margin: 12px 0 0; font-size: .72rem; color: var(--muted); padding-top: 10px; border-top: 1px solid var(--border); }
+  .kpi.spot { border-color: color-mix(in srgb, var(--series-2) 45%, var(--border)); }
+  .kpi.spot .val { color: var(--series-2); }
+
+  /* callout strip */
+  .callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .callout {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--series-1);
+    border-radius: 10px;
+    padding: 13px 15px;
+  }
+  .callout b { font-family: var(--font-display); font-weight: 700; color: var(--ink); }
+  .callout p { margin: 4px 0 0; font-size: .85rem; color: var(--ink-2); }
+  .callout .src { font-size: .7rem; color: var(--muted); display: block; margin-top: 7px; }
+
+  /* chart panels */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 20px 16px;
+    box-shadow: var(--shadow);
+  }
+  .panel + .panel { margin-top: 18px; }
+  .panels-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .panels-2 .panel { margin: 0; }
+
+  .bars { display: flex; flex-direction: column; gap: 13px; margin-top: 6px; }
+  .bar-row { display: grid; grid-template-columns: minmax(110px, 38%) 1fr auto; align-items: center; gap: 12px; }
+  .bar-label { font-size: .86rem; color: var(--ink-2); min-width: 0; }
+  .bar-track { position: relative; height: 20px; background: var(--surface-2); border-radius: 5px; overflow: hidden; min-width: 0; }
+  .bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--series-1);
+    border-radius: 0 5px 5px 0;
+    min-width: 3px;
+  }
+  .bar-fill.spot { background: var(--series-2); }
+  .bar-val { font-size: .88rem; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bar-row[data-tip] { cursor: default; }
+  .bar-row[data-tip]:hover .bar-track { outline: 2px solid color-mix(in srgb, var(--series-1) 40%, transparent); outline-offset: 1px; }
+
+  /* comparison (Colombia vs world) */
+  .compare { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+  .cmp-row { }
+  .cmp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .cmp-name { font-size: .9rem; color: var(--ink-2); font-weight: 600; }
+  .cmp-name.me { color: var(--series-2); }
+  .cmp-num { font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .cmp-track { height: 14px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .cmp-fill { height: 100%; border-radius: 0 4px 4px 0; background: var(--series-1); }
+  .cmp-fill.me { background: var(--series-2); }
+
+  /* legend */
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin: 2px 0 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; font-size: .8rem; color: var(--ink-2); }
+  .swatch { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+  .axis-note { font-size: .74rem; color: var(--muted); margin-top: 12px; }
+
+  /* timeline */
+  .timeline { position: relative; margin-top: 8px; padding-left: 4px; }
+  .tl-item { position: relative; padding: 0 0 22px 30px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before { content: ""; position: absolute; left: 7px; top: 22px; bottom: -4px; width: 2px; background: var(--grid); }
+  .tl-item:last-child::before { display: none; }
+  .tl-dot { position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); border: 3px solid var(--series-1); }
+  .tl-item.now .tl-dot { border-color: var(--series-2); background: var(--series-2); }
+  .tl-item.future .tl-dot { border-color: var(--baseline); border-style: dashed; }
+  .tl-year { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--ink); }
+  .tl-item.now .tl-year { color: var(--series-2); }
+  .tl-title { font-weight: 600; font-size: .95rem; margin: 1px 0 3px; color: var(--ink); }
+  .tl-desc { font-size: .85rem; color: var(--ink-2); margin: 0; max-width: 62ch; }
+
+  /* data table */
+  details.data { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px; }
+  details.data summary { cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--series-1); list-style: none; display: inline-flex; align-items: center; gap: 6px; }
+  details.data summary::-webkit-details-marker { display: none; }
+  details.data summary::before { content: "▸"; font-size: .7em; transition: transform .15s; }
+  details.data[open] summary::before { transform: rotate(90deg); }
+  table { border-collapse: collapse; width: 100%; margin-top: 12px; font-size: .84rem; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .03em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .illus-tag { display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent-head); background: var(--series-1-soft); border-radius: 5px; padding: 2px 7px; margin-left: 8px; vertical-align: middle; }
+
+  /* sources / method */
+  .method { background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  .method h2 { font-size: 1.1rem; }
+  .method p { font-size: .88rem; color: var(--ink-2); margin: 0 0 12px; max-width: 78ch; }
+  .srclist { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+  .srclist li { font-size: .82rem; color: var(--ink-2); padding-left: 16px; position: relative; }
+  .srclist li::before { content: "—"; position: absolute; left: 0; color: var(--muted); }
+  .srclist a { color: var(--series-1); text-decoration: none; word-break: break-word; }
+  .srclist a:hover { text-decoration: underline; }
+  .srclist b { color: var(--ink); font-weight: 600; }
+  footer { margin-top: 28px; font-size: .76rem; color: var(--muted); text-align: center; }
+
+  /* tooltip */
+  #tip {
+    position: fixed; z-index: 50; pointer-events: none; opacity: 0;
+    transition: opacity .12s; max-width: 260px;
+    background: var(--ink); color: var(--plane);
+    border-radius: 8px; padding: 9px 11px; font-size: .78rem; line-height: 1.4;
+    box-shadow: 0 6px 20px rgba(0,0,0,.28);
+  }
+  #tip .tv { font-family: var(--font-display); font-weight: 800; font-size: 1rem; }
+  #tip .ts { opacity: .75; font-size: .72rem; display: block; margin-top: 3px; }
+
+  @media (max-width: 860px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .panels-2 { grid-template-columns: 1fr; }
+    .callouts { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 460px) {
+    .kpis { grid-template-columns: 1fr; }
+    .bar-row { grid-template-columns: 1fr auto; }
+    .bar-row .bar-track { grid-column: 1 / -1; order: 3; }
+    .bar-val { order: 2; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <p class="eyebrow">Panel de datos · Colombia</p>
+      <h1>Adopción de la inteligencia artificial en Colombia</h1>
+      <p class="sub">Uso de IA en el trabajo y las empresas, comparativa regional, barreras y marco de política pública, a partir de fuentes públicas verificadas.</p>
+    </div>
+    <div class="meta-side">
+      <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema claro u oscuro">
+        <span id="themeIcon">◐</span><span id="themeTxt">Tema</span>
+      </button>
+      <p class="updated">Última actualización<br><b>21 de octubre de 2026</b></p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPI ROW -->
+  <section style="margin-top:0" aria-label="Indicadores principales">
+    <div class="kpis">
+      <div class="kpi">
+        <p class="cap">Trabajadores que usan IA</p>
+        <div class="val">81<span class="unit">%</span></div>
+        <p class="desc">de los trabajadores del conocimiento en Colombia usan IA generativa en su trabajo (promedio mundial: 75 %).</p>
+        <p class="src">Microsoft &amp; LinkedIn · Work Trend Index 2024</p>
+      </div>
+      <div class="kpi">
+        <p class="cap">Empresas que elevan su presupuesto</p>
+        <div class="val">82<span class="unit">%</span></div>
+        <p class="desc">de las grandes empresas planea aumentar su presupuesto de IA en 2 años: el mayor porcentaje de la región.</p>
+        <p class="src">IDC para Microsoft · 2024 (empresas &gt;1.000 empleados)</p>
+      </div>
+      <div class="kpi spot">
+        <p class="cap">Posición en Latinoamérica</p>
+        <div class="val">2.º</div>
+        <p class="desc">en adopción de herramientas de IA entre trabajadores (29 %), solo detrás de Brasil (37 %).</p>
+        <p class="src">WeWork &amp; PageGroup</p>
+      </div>
+      <div class="kpi">
+        <p class="cap">Inversión pública (CONPES 4144)</p>
+        <div class="val">$479<span class="unit"> mil mill.</span></div>
+        <p class="desc">de pesos (~US$116 millones) para 106 acciones de política de IA con horizonte a 2030.</p>
+        <p class="src">CONPES 4144 · DNP · 14 feb 2025</p>
+      </div>
+    </div>
+
+    <div class="callouts">
+      <div class="callout">
+        <b>57 %</b>
+        <p>de los directivos colombianos no contrataría a alguien sin conocimientos de IA.</p>
+        <span class="src">Microsoft &amp; LinkedIn · Work Trend Index 2024</span>
+      </div>
+      <div class="callout">
+        <b>3×</b>
+        <p>el retorno de las iniciativas de IA frente a su costo en empresas colombianas; primer lugar regional junto a Chile.</p>
+        <span class="src">IDC para Microsoft · 2024</span>
+      </div>
+      <div class="callout">
+        <b>+659 %</b>
+        <p>crecieron en un año las inscripciones a cursos de IA generativa en Colombia.</p>
+        <span class="src">Coursera · Global Skills Report 2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- BARRERAS -->
+  <section aria-label="Barreras de adopción">
+    <div class="panel">
+      <div class="sec-head">
+        <h2>Principales barreras para adoptar IA</h2>
+      </div>
+      <p class="sec-note">Porcentaje de empresas que señala cada obstáculo. El talento y el conocimiento pesan más que el costo o la infraestructura. Pasa el cursor sobre cada barra para ver el detalle.</p>
+      <div class="bars" id="barsBarreras"></div>
+      <p class="axis-note">Escala 0–50 %. Sector software y TI en Colombia · encuesta a 104 empresas (abr–may 2026).</p>
+      <details class="data">
+        <summary>Ver datos y fuente</summary>
+        <table>
+          <thead><tr><th>Barrera</th><th class="num">% de empresas</th></tr></thead>
+          <tbody id="tblBarreras"></tbody>
+        </table>
+        <p class="sec-note" style="margin-top:10px">Fuente: Fedesoft – CENISOFT, <i>Estado de la adopción de IA en el sector de software</i>, abril–mayo de 2026 (104 empresas).</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- COMPARATIVAS -->
+  <section aria-label="Comparativa regional">
+    <div class="panels-2">
+      <div class="panel">
+        <div class="sec-head"><h2>Colombia vs. el mundo</h2></div>
+        <p class="sec-note">Trabajadores del conocimiento que usan IA generativa en el trabajo.</p>
+        <div class="compare" id="cmpMundo"></div>
+        <p class="axis-note">Fuente: Microsoft &amp; LinkedIn · Work Trend Index 2024 (31.000 personas, 31 países).</p>
+      </div>
+      <div class="panel">
+        <div class="sec-head"><h2>Adopción en Latinoamérica</h2></div>
+        <p class="sec-note">Trabajadores que ya usan herramientas de IA, por país.</p>
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--series-2)"></span>Colombia</span>
+          <span><span class="swatch" style="background:var(--series-1)"></span>Otros países</span>
+        </div>
+        <div class="bars" id="barsLatam"></div>
+        <p class="axis-note">Escala 0–40 %. Fuente: WeWork &amp; PageGroup. Solo Brasil y Colombia tienen cifra confirmada en la fuente; el resto queda por debajo de Colombia sin dato exacto publicado.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDICE MARKETING (ilustrativo) -->
+  <section aria-label="Índice de madurez en marketing">
+    <div class="panel">
+      <div class="sec-head">
+        <h2>Madurez de IA en marketing, por país<span class="illus-tag">métrica distinta</span></h2>
+      </div>
+      <p class="sec-note">Índice de madurez de uso de IA en marketing (0–100). Es una métrica diferente a las de arriba y de fuente secundaria; se incluye solo como referencia comparativa regional.</p>
+      <div class="bars" id="barsIndice"></div>
+      <p class="axis-note">Escala 0–100 (índice). Dato de referencia · fuente secundaria (HubSpot, panorama de IA en marketing en LatAm).</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE POLITICA -->
+  <section aria-label="Marco de política pública">
+    <div class="panel">
+      <div class="sec-head"><h2>Marco de política pública de IA</h2></div>
+      <p class="sec-note">De la primera política de transformación digital a la Política Nacional de Inteligencia Artificial.</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <span class="tl-dot"></span>
+          <div class="tl-year">2019</div>
+          <p class="tl-title">CONPES 3975 — Transformación digital e IA</p>
+          <p class="tl-desc">Primera política de transformación digital e inteligencia artificial; sienta las bases institucionales y de datos para la IA en el Estado.</p>
+        </div>
+        <div class="tl-item now">
+          <span class="tl-dot"></span>
+          <div class="tl-year">2025</div>
+          <p class="tl-title">CONPES 4144 — Política Nacional de IA</p>
+          <p class="tl-desc">Aprobada el 14 de febrero de 2025. Se organiza en 6 ejes (ética y gobernanza; datos e infraestructura; investigación, desarrollo e innovación; talento; usos y adopción; mitigación de riesgos) con 106 acciones y ~$479.273 millones de pesos de inversión. Liderada por el DNP y el MinTIC.</p>
+        </div>
+        <div class="tl-item future">
+          <span class="tl-dot"></span>
+          <div class="tl-year">2030</div>
+          <p class="tl-title">Horizonte de ejecución</p>
+          <p class="tl-desc">Año límite para completar las 106 acciones del plan, con seguimiento a cargo del DNP. <b>Proyección de política</b>, sujeta a asignación presupuestal anual.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METODO Y FUENTES -->
+  <section aria-label="Nota metodológica y fuentes">
+    <div class="method">
+      <h2>Nota metodológica y fuentes</h2>
+      <p>Las cifras provienen de estudios con metodologías y universos distintos, por lo que no siempre son directamente comparables entre sí. El uso de IA entre trabajadores del conocimiento (Microsoft/LinkedIn) mide una población distinta a la adopción de herramientas reportada por WeWork/PageGroup; por eso aparecen porcentajes diferentes para "uso de IA". No se incluye una serie temporal de adopción porque las ediciones disponibles del Work Trend Index (2024 y 2026) miden indicadores distintos y no son comparables año a año. El índice de madurez de IA en marketing se marca como métrica aparte y de fuente secundaria. Las cifras del CONPES 4144 provienen de la cobertura de prensa del documento oficial del DNP; el desglose presupuestal por eje debe consultarse en el documento oficial. Fecha de consulta de todas las fuentes: 21 de octubre de 2026.</p>
+      <ul class="srclist">
+        <li><b>Microsoft &amp; LinkedIn — Work Trend Index 2024</b> (uso de IA entre trabajadores del conocimiento en Colombia: 81 %; 57 % de directivos). <a href="https://impactotic.co/inteligencia-artificial/el-81-de-los-trabajadores-del-conocimiento-usan-inteligencia-artificial-generativa-en-colombia/">impactotic.co</a></li>
+        <li><b>IDC para Microsoft — 2024</b> (82 % de grandes empresas aumentará presupuesto de IA; ROI 3×). <a href="https://impactotic.co/micrositios-tic/inteligencia-artificial/inversion-en-inteligencia-artificial-colombia/">impactotic.co</a> · <a href="https://www.enter.co/empresas/colombia-por-encima-de-otros-paises-latinoamericanos-en-retorno-de-inversion-en-ia-microsoft">enter.co</a></li>
+        <li><b>WeWork &amp; PageGroup</b> (Colombia 2.º en adopción de herramientas de IA, 29 %; Brasil 37 %). <a href="https://lanotaeconomica.com.co/movidas-empresarial/colombia-se-consolida-como-el-segundo-pais-de-latinoamerica-en-adopcion-de-inteligencia-artificial/">lanotaeconomica.com.co</a></li>
+        <li><b>CONPES 4144 — DNP, 14 feb 2025</b> (Política Nacional de IA: 106 acciones, ~$479.273 millones, ~US$116 millones, horizonte 2030). <a href="https://impactotic.co/gobierno/politicas-tic/colombia-aprobo-su-conpes-de-inteligencia-artificial/">impactotic.co</a> · <a href="https://ambitojuridico.com/sites/default/files/2025-02/Conpes-4144-2025.pdf">Documento oficial (PDF)</a> · <a href="https://dplnews.com/colombia-aprueba-politica-nacional-para-el-desarrollo-de-la-inteligencia-artificial/">dplnews.com</a></li>
+        <li><b>CONPES 3975 — DNP, 2019</b> (Política de transformación digital e IA). Referencia histórica del marco de política.</li>
+        <li><b>Fedesoft – CENISOFT, abr–may 2026</b> (barreras de adopción en software y TI; 104 empresas). <a href="https://www.portafolio.co/tecnologia/asi-avanza-la-adopcion-de-ia-en-las-empresas-colombianas-637412">portafolio.co</a></li>
+        <li><b>Bain &amp; Company</b> (talento como principal barrera en LatAm; 22 % de empresas colombianas con &gt;40 % de iniciativas de IA generativa implementadas). <a href="https://dplnews.com/diagnostico-google-cloud-escalar-ia-colombia/">dplnews.com</a></li>
+        <li><b>Coursera — Global Skills Report 2024</b> (inscripciones a cursos de IA generativa +659 %). Reporte anual de habilidades.</li>
+        <li><b>Índice de IA en marketing (LatAm)</b> — métrica de referencia, fuente secundaria. <a href="https://blog.hubspot.es/marketing/adopcion-ia-latam">blog.hubspot.es</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Panel informativo con fines divulgativos. Las cifras pueden revisarse según nuevas ediciones de los estudios citados · Datos consultados el 21 de octubre de 2026.
+  </footer>
+</div>
+
+<div id="tip" role="status" aria-live="off"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---- Theme toggle ----
+  var root = document.documentElement;
+  var btn = document.getElementById("themeBtn");
+  var icon = document.getElementById("themeIcon");
+  var txt = document.getElementById("themeTxt");
+  function prefersDark() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t === "dark") return true;
+    if (t === "light") return false;
+    return prefersDark();
+  }
+  function reflect() {
+    var d = isDark();
+    icon.textContent = d ? "☀" : "☾";
+    txt.textContent = d ? "Claro" : "Oscuro";
+  }
+  try {
+    var stored = localStorage.getItem("ia-co-theme");
+    if (stored === "dark" || stored === "light") root.setAttribute("data-theme", stored);
+  } catch (e) {}
+  reflect();
+  btn.addEventListener("click", function () {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("ia-co-theme", next); } catch (e) {}
+    reflect();
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reflect);
+    } catch (e) {}
+  }
+
+  // ---- Tooltip ----
+  var tip = document.getElementById("tip");
+  function showTip(html, x, y) {
+    tip.innerHTML = html;
+    tip.style.opacity = "1";
+    var r = tip.getBoundingClientRect();
+    var left = x + 14, top = y + 14;
+    if (left + r.width > window.innerWidth - 8) left = x - r.width - 14;
+    if (top + r.height > window.innerHeight - 8) top = y - r.height - 14;
+    tip.style.left = Math.max(8, left) + "px";
+    tip.style.top = Math.max(8, top) + "px";
+  }
+  function hideTip() { tip.style.opacity = "0"; }
+
+  function bindTip(row, title, value, source) {
+    var html = '<div>' + title + '</div><div class="tv">' + value + '</div>' +
+               (source ? '<span class="ts">' + source + '</span>' : '');
+    row.setAttribute("tabindex", "0");
+    row.addEventListener("mousemove", function (e) { showTip(html, e.clientX, e.clientY); });
+    row.addEventListener("mouseleave", hideTip);
+    row.addEventListener("focus", function () {
+      var b = row.getBoundingClientRect();
+      showTip(html, b.left + b.width / 2, b.top);
+    });
+    row.addEventListener("blur", hideTip);
+  }
+
+  // ---- Horizontal bar chart builder ----
+  function fmtPct(v) { return String(v).replace(".", ",") + " %"; }
+
+  function buildBars(containerId, rows, opts) {
+    opts = opts || {};
+    var max = opts.max;
+    var unit = opts.unit || "%";
+    var source = opts.source || "";
+    var c = document.getElementById(containerId);
+    if (!c) return;
+    rows.forEach(function (r) {
+      var pct = Math.max(1.5, (r.value / max) * 100);
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      row.setAttribute("data-tip", "1");
+
+      var label = document.createElement("div");
+      label.className = "bar-label";
+      label.textContent = r.label;
+
+      var track = document.createElement("div");
+      track.className = "bar-track";
+      var fill = document.createElement("div");
+      fill.className = "bar-fill" + (r.spot ? " spot" : "");
+      fill.style.width = pct + "%";
+      track.appendChild(fill);
+
+      var val = document.createElement("div");
+      val.className = "bar-val";
+      val.textContent = unit === "%" ? fmtPct(r.value) : String(r.value).replace(".", ",");
+
+      row.appendChild(label);
+      row.appendChild(track);
+      row.appendChild(val);
+      c.appendChild(row);
+
+      var vtxt = unit === "%" ? fmtPct(r.value) : String(r.value).replace(".", ",") + (opts.valSuffix || "");
+      bindTip(row, r.label, vtxt, r.source || source);
+    });
+  }
+
+  // ---- Data ----
+  var barreras = [
+    { label: "Falta de talento especializado", value: 46.2 },
+    { label: "Desconocimiento de la IA", value: 40.4 },
+    { label: "Falta de estrategia empresarial", value: 34.6 },
+    { label: "Costos de implementación", value: 27.9 },
+    { label: "Políticas y cultura corporativa", value: 27.9 },
+    { label: "Integración con sistemas existentes", value: 24.5 }
+  ];
+  buildBars("barsBarreras", barreras, { max: 50, source: "Fedesoft–CENISOFT, 2026" });
+
+  // table for barreras
+  var tb = document.getElementById("tblBarreras");
+  barreras.forEach(function (r) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + r.label + "</td><td class='num'>" + fmtPct(r.value) + "</td>";
+    tb.appendChild(tr);
+  });
+
+  var latam = [
+    { label: "Brasil", value: 37 },
+    { label: "Colombia", value: 29, spot: true }
+  ];
+  buildBars("barsLatam", latam, { max: 40, source: "WeWork & PageGroup" });
+
+  var indice = [
+    { label: "Chile", value: 73 },
+    { label: "Brasil", value: 69 },
+    { label: "Uruguay", value: 65 },
+    { label: "Argentina", value: 56 },
+    { label: "Colombia", value: 53, spot: true },
+    { label: "México", value: 47 },
+    { label: "Perú", value: 46 }
+  ];
+  buildBars("barsIndice", indice, { max: 100, unit: "idx", source: "Índice de IA en marketing (fuente secundaria)", valSuffix: "" });
+
+  // ---- Colombia vs mundo ----
+  var cmp = [
+    { name: "Colombia", value: 81, me: true },
+    { name: "Promedio mundial", value: 75, me: false }
+  ];
+  var cc = document.getElementById("cmpMundo");
+  cmp.forEach(function (r) {
+    var wrap = document.createElement("div");
+    wrap.className = "cmp-row";
+    wrap.innerHTML =
+      '<div class="cmp-top"><span class="cmp-name' + (r.me ? " me" : "") + '">' + r.name + '</span>' +
+      '<span class="cmp-num">' + r.value + ' %</span></div>' +
+      '<div class="cmp-track"><div class="cmp-fill' + (r.me ? " me" : "") + '" style="width:' + r.value + '%"></div></div>';
+    cc.appendChild(wrap);
+  });
+})();
+</script>
